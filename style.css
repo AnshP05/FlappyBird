@@ -1,0 +1,106 @@
+/* Universal selector: removes default spacing, uses border-box for accurate sizing,
+   and sets a sans-serif fallback font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Background fills full screen with centered, non-repeating image that stays fixed;
+   cover ensures it fills the area even if cropped */
+.background {
+    height: 100vh;
+    width: 100vw;
+    background: url('images/background-img.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Bird is fixed to screen at 40% height and 30% width; z-index 100 keeps it above
+   everything else; size controls image box */
+.bird {
+    height: 100px;
+    width: 130px;
+    position: fixed;
+    top: 40vh;
+    left: 30vw;
+    z-index: 100;
+}
+
+/* Pipe is fixed and enters from the right; its left value will move via JS;
+   radial gradient gives it a shiny look; border adds visual contrast */
+.pipe-sprite {
+    position: fixed;
+    top: 40vh;
+    left: 100vw;
+    height: 70vh;
+    width: 6vw;
+    background: radial-gradient(lightgreen 50%, green);
+    border: 5px solid black;
+}
+
+/* Message box is absolutely centered on screen, shown above background and pipes;
+   text is centered and styled below using messageStyle */
+.message {
+    position: absolute;
+    z-index: 10;
+    color: black;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* Message styling: white background, internal padding, soft shadow for pop,
+   and slightly rounded corners for clean UI */
+.messageStyle {
+    background: white;
+    padding: 30px;
+    box-shadow: rgba(0,0,0,0.24) 0px 3px 8px;
+    border-radius: 5%;
+}
+
+/* Score is fixed top-left and scales with screen height; light font with
+   bold outline improves visibility across all backgrounds */
+.score {
+    position: fixed;
+    z-index: 10;
+    height: 10vh;
+    font-size: 10vh;
+    font-weight: 100;
+    color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    top: 0;
+    left: 0;
+    margin: 10px;
+}
+
+/* Score value styled gold and bold to draw attention over plain label text */
+.score_val {
+    color: gold;
+    font-weight: bold;
+}
+
+/* Responsive tweaks for smaller screens: shrink message font, reposition it lower,
+   prevent text wrap; scale score and elements for balance */
+@media only screen and (max-width: 1088px) {
+    .message {
+        font-size: 50px;
+        top: 50%;
+        white-space: nowrap;
+    }
+
+    .score {
+        font-size: 8vh;
+    }
+
+    .bird {
+        width: 120px;
+        height: 90px;
+    }
+
+    .pipe-sprite {
+        width: 14vw;
+    }
+}
