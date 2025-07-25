@@ -29,7 +29,7 @@
 
 /* Pipe is fixed and enters from the right; its left value will move via JS;
    radial gradient gives it a shiny look; border adds visual contrast */
-.pipe-sprite {
+.pipe_sprite {
     position: fixed;
     top: 40vh;
     left: 100vw;
@@ -100,7 +100,7 @@
         height: 90px;
     }
 
-    .pipe-sprite {
+    .pipe_sprite {
         width: 14vw;
     }
 }
