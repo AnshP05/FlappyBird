@@ -3,7 +3,9 @@
 // move_speed controls how fast pipes move from right to left
 // gravity determines how quickly the bird falls downward every frame
 // ---------------------------
-let move_speed = 3, gravity = 0.5
+let move_speed = 3, gravity = 0.5, pipe_threshold = 115
+const max_speed = 20, min_pipe_threshold = 50
+let maxScore = 0, last_leveled_up_score = 0
 
 
 // ---------------------------
@@ -82,6 +84,7 @@ document.addEventListener('keydown', (e) => {
 
         // Remove the message box styling (white box) so nothing remains visible
         message.classList.remove('messageStyle')
+        move_speed = 3
         play()
     }
 })
@@ -112,7 +115,7 @@ function play() {
     function create_pipe() {
         if (game_state !== 'Play') return;
 
-        if (pipe_separation > 115) {
+        if (pipe_separation > pipe_threshold) {
             pipe_separation = 0;
 
             let pipe_posi = Math.floor(Math.random() * 43) + 8;
@@ -173,12 +176,17 @@ function play() {
                 pipe.setAttribute('data-score', '0');
                 score_val.innerHTML = parseInt(score_val.innerHTML) + 1;
                 if (typeof sound_point !== 'undefined') sound_point.play();
+                if(move_speed < max_speed && parseInt(score_val.innerHTML)%5 == 0 && parseInt(score_val.innerHTML) > last_leveled_up_score){
+                    move_speed += 2
+                    pipe_threshold = pipe_threshold > min_pipe_threshold ? pipe_threshold - 10 : min_pipe_threshold
+                    last_leveled_up_score = parseInt(score_val.innerHTML)
+                }
             }
 
             // Move pipe left
             pipe.style.left = pipe_props.left - move_speed + 'px';
         });
-
+        
         requestAnimationFrame(move);
     }
 
