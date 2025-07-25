@@ -82,6 +82,26 @@
     font-weight: bold;
 }
 
+.max-score {
+    position: fixed;
+    z-index: 10;
+    height: 5vh;
+    font-size: 5vh;
+    font-weight: 100;
+    color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    top: 90px;
+    left: 10px;
+    margin: 10px;
+}
+
+/* Score value styled gold and bold to draw attention over plain label text */
+.max_score_val {
+    color: gold;
+    font-weight: bold;
+}
+
 /* Responsive tweaks for smaller screens: shrink message font, reposition it lower,
    prevent text wrap; scale score and elements for balance */
 @media only screen and (max-width: 1088px) {

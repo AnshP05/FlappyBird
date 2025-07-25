@@ -3,9 +3,9 @@
 // move_speed controls how fast pipes move from right to left
 // gravity determines how quickly the bird falls downward every frame
 // ---------------------------
-let move_speed = 3, gravity = 0.5, pipe_threshold = 115
+let move_speed = 3, gravity = 0.5, pipe_threshold = 145
 const max_speed = 20, min_pipe_threshold = 50
-let maxScore = 0, last_leveled_up_score = 0
+let maxScore = JSON.parse(localStorage.getItem("High Score")) ? JSON.parse(localStorage.getItem("High Score")) : 0 , last_leveled_up_score = 0
 
 
 // ---------------------------
@@ -34,6 +34,9 @@ let background = document.querySelector('.background').getBoundingClientRect()
 let score_val = document.querySelector('.score_val')
 let message = document.querySelector('.message')
 let score_title = document.querySelector('.score_title')
+let max_score_val = document.querySelector('.max_score_val')
+max_score_val.innerHTML = maxScore
+let max_score_title = document.querySelector('.max_score_title')
 
 
 // ---------------------------
@@ -81,7 +84,8 @@ document.addEventListener('keydown', (e) => {
         // Reset score display elements
         score_title.innerHTML = 'Score : '
         score_val.innerHTML = '0'
-
+        max_score_title.innerHTML = 'Highest Score: '
+        max_score_val.innerHTML = maxScore
         // Remove the message box styling (white box) so nothing remains visible
         message.classList.remove('messageStyle')
         move_speed = 3
@@ -175,6 +179,14 @@ function play() {
             ) {
                 pipe.setAttribute('data-score', '0');
                 score_val.innerHTML = parseInt(score_val.innerHTML) + 1;
+
+                const currentScore = parseInt(score_val.innerHTML);
+                if (currentScore > maxScore) {
+                    maxScore = currentScore;
+                    localStorage.setItem("High Score", maxScore);
+                    max_score_val.innerHTML = maxScore;
+                }
+
                 if (typeof sound_point !== 'undefined') sound_point.play();
                 if(move_speed < max_speed && parseInt(score_val.innerHTML)%5 == 0 && parseInt(score_val.innerHTML) > last_leveled_up_score){
                     move_speed += 2
@@ -211,6 +223,7 @@ function play() {
         message.classList.add('messageStyle');
         img.style.display = 'none';
         if (typeof sound_die !== 'undefined') sound_die.play();
+        localStorage.setItem("High Score", maxScore)
     }
 
     // Start animation loops
