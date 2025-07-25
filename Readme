@@ -1,0 +1,50 @@
+# 🐤 Flappy Bird Clone
+
+A browser-based Flappy Bird remake built with vanilla JavaScript, HTML, and CSS. Dodge pipes, earn points, and test your reflexes in this fast-paced side-scroller — now with high score tracking and adaptive difficulty.
+
+## 🚀 Features
+
+- 🎮 Smooth gameplay using `requestAnimationFrame`
+- 🧠 Realistic physics with gravity and jump mechanics
+- 🌪️ Increasing difficulty as your score rises
+- 🏆 LocalStorage-based high score saving
+- 🚨 Visual red warning flash when you're near the ground, ceiling, or pipes
+- 🔁 Instant restart on crash
+- 🎨 Lightweight, responsive UI
+
+## 🛠️ Tech Stack
+
+- **HTML/CSS** – Page structure and styling  
+- **JavaScript** – Game logic, animation, collision detection, score tracking  
+- **LocalStorage API** – Saves high score across browser sessions  
+
+## 🎯 How to Play
+
+- Press **Enter** to start or restart the game  
+- Use the **Up Arrow** or **Spacebar** to make the bird fly  
+- Avoid hitting the pipes or the edges of the screen  
+- Score points by passing through the pipe gaps  
+- The game gets harder as your score increases  
+
+## 📸 Screenshot
+
+![Screenshot of Flappy Bird Game](./images/screenshot.png)
+
+## 📁 File Structure
+
+.
+├── index.html
+├── style.css
+├── script.js
+├── images/
+│ ├── Bird.png
+│ ├── Bird-2.png
+│ └── screenshot.png 
+
+
+
+📜 License
+Free to use, modify, or fork.
+
+💬 Author
+Built by Ansh Parashar

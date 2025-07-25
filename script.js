@@ -177,7 +177,7 @@ function play() {
                     const pipeGapTop = top_props.bottom;
                     const pipeGapBottom = bottom_props.top;
                     const birdMidY = bird_props.top + bird_props.height / 2;
-                    const safeBuffer = 20;
+                    const safeBuffer = 75;
 
                     if (
                         bird_props.right > top_props.left && bird_props.left < top_props.right &&
