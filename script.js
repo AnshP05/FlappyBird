@@ -3,6 +3,7 @@
 // move_speed controls how fast pipes move from right to left
 // gravity determines how quickly the bird falls downward every frame
 // ---------------------------
+
 let move_speed = 3, gravity = 0.5, pipe_threshold = 145
 const max_speed = 20, min_pipe_threshold = 50
 let maxScore = JSON.parse(localStorage.getItem("High Score")) ? JSON.parse(localStorage.getItem("High Score")) : 0 , last_leveled_up_score = 0
@@ -56,6 +57,7 @@ let game_state = 'Start'
 img.style.display = 'none'
 message.classList.add('messageStyle')
 
+let warnedRecently = false
 
 // ---------------------------
 // Event listener to start the game when "Enter" is pressed
@@ -112,6 +114,11 @@ function play() {
             return;
         }
 
+        const danger_zone = 60
+        if(!warnedRecently && (bird_props.top <= danger_zone || bird_props.bottom >= background.bottom - danger_zone)) {
+            triggerWarningFlash()
+        }
+
         requestAnimationFrame(apply_gravity);
     }
 
@@ -159,6 +166,26 @@ function play() {
             if (pipe_props.right <= 0) {
                 pipe.remove();
                 return;
+            }
+            // Only process bottom pipes (data-score="1")
+            if (pipe.getAttribute('data-score') === '1') {
+                const topPipe = pipe.previousElementSibling;
+                if (topPipe && topPipe.classList.contains('pipe_sprite')) {
+                    const top_props = topPipe.getBoundingClientRect();
+                    const bottom_props = pipe.getBoundingClientRect();
+
+                    const pipeGapTop = top_props.bottom;
+                    const pipeGapBottom = bottom_props.top;
+                    const birdMidY = bird_props.top + bird_props.height / 2;
+                    const safeBuffer = 20;
+
+                    if (
+                        bird_props.right > top_props.left && bird_props.left < top_props.right &&
+                        (birdMidY < pipeGapTop + safeBuffer || birdMidY > pipeGapBottom - safeBuffer)
+                    ) {
+                        triggerWarningFlash();
+                    }
+                }
             }
 
             // Collision detection
@@ -230,4 +257,15 @@ function play() {
     requestAnimationFrame(move);
     requestAnimationFrame(apply_gravity);
     requestAnimationFrame(create_pipe);
+}
+
+function triggerWarningFlash() {
+    const bg = document.querySelector('.background')
+    if(bg.classList.contains('warning-flash')) return
+    bg.classList.add('warning-flash')
+    warnedRecently = true
+    setTimeout(() => {
+        bg.classList.remove('warning-flash')
+        warnedRecently = false
+    }, 500)
 }
